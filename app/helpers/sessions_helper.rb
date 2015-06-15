@@ -16,6 +16,10 @@ module SessionsHelper
     end
   end
 
+  def current_user?(user)
+    user == current_user
+  end
+
   # Remembers a user in a persistent session
   def remember(user)
     user.remember
