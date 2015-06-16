@@ -21,6 +21,7 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     email = 'foo@bar.com'
 
     get edit_user_path(@user)
+    assert_redirected_to login_path
     log_in_as(@user)
     assert_redirected_to edit_user_path(@user)
     follow_redirect!
@@ -34,5 +35,15 @@ class UsersEditTest < ActionDispatch::IntegrationTest
     @user.reload
     assert_equal name, @user.name
     assert_equal email, @user.email
+  end
+
+  test 'friendly forwarding should only work once' do
+    get edit_user_path(@user)
+    assert_redirected_to login_path
+    log_in_as(@user)
+    assert_redirected_to edit_user_path(@user)
+    follow_redirect!
+    log_in_as(@user)
+    assert_redirected_to user_path(@user)
   end
 end
