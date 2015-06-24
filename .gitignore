@@ -18,3 +18,5 @@
 
 # CodeClimate
 /coverage
+
+/public/uploads
