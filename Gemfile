@@ -36,6 +36,10 @@ gem 'bootstrap-will_paginate', '~> 0.0.10'
 
 gem 'faker', '~> 1.4.2'
 
+gem 'carrierwave', '~> 0.10.0'
+gem 'mini_magick', '~> 3.8.0'
+gem 'fog', '~> 1.23.0'
+
 group :development, :test do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3', '~> 1.3.9'
