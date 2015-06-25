@@ -16,7 +16,7 @@ gem 'coffee-rails', '~> 4.1.0'
 # Use jquery as the JavaScript library
 gem 'jquery-rails', '~> 4.0.4'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks', '~> 2.3.0'
+gem 'turbolinks', '~> 2.3'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.2'
 # bundle exec rake doc:rails generates the API under doc/api.
@@ -37,8 +37,8 @@ gem 'bootstrap-will_paginate', '~> 0.0.10'
 gem 'faker', '~> 1.4.2'
 
 gem 'carrierwave', '~> 0.10.0'
-gem 'mini_magick', '~> 3.8.0'
-gem 'fog', '~> 1.23.0'
+gem 'mini_magick', '~> 4.2.7'
+gem 'fog', '~> 1.23'
 
 group :development, :test do
   # Use sqlite3 as the database for Active Record
