@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
 
   include SessionsHelper
 
+  before_action :set_locale
+
   # Confirms a logged-in user
   def logged_in_user
     unless logged_in?
@@ -12,5 +14,13 @@ class ApplicationController < ActionController::Base
       flash[:danger] = 'Please log in'
       redirect_to login_url
     end
+  end
+
+  private
+
+  def set_locale
+    locale = params[:locale] || session[:locale]
+    locale = I18n.default_locale unless I18n.locale_available?(locale)
+    I18n.locale = session[:locale] = locale
   end
 end
