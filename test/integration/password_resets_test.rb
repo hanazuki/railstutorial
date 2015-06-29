@@ -44,11 +44,27 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
     assert_template 'password_resets/edit'
     assert_select 'input[name=email][type=hidden][value=?]', user.email
 
-    # Invalid password & confirmation
+    # Blank password
+    patch password_reset_path(user.reset_token),
+          email: user.email,
+          user: {password: '', password_confirmation: ''}
+    assert_select '.flash_message', text: /blank/
+
+    # Invalid password confirmation
     patch password_reset_path(user.reset_token),
           email: user.email,
           user: {password: 'foobaz', password_confirmation: 'barquux'}
     assert_select 'div#error_explanation'
+
+    # Valid password & confirmation
+    patch password_reset_path(user.reset_token),
+          email: user.email,
+          user: {password: 'foobar', password_confirmation: 'foobar'}
+    assert_redirected_to user_url(@user)
+    follow_redirect!
+    assert_select '.flash_message', text: /reset/
+    assert is_logged_in?, 'User should now be logged in'
+    assert @user.reload.authenticate('foobar'), 'User should be able to login with the new password'
   end
 
   test 'expired token' do
