@@ -11,10 +11,10 @@ class PasswordResetsController < ApplicationController
     if @user
       @user.create_reset_digest
       @user.send_password_reset_email
-      flash[:info] = I18n.t(:email_sent, scope: 'password_resets.create')
+      flash[:info] = t('.email_sent')
       redirect_to root_url
     else
-      flash.now[:danger] = I18n.t(:email_not_found, scope: 'password_resets.create')
+      flash.now[:danger] = t('.email_not_found')
       render 'new'
     end
   end
@@ -24,11 +24,11 @@ class PasswordResetsController < ApplicationController
 
   def update
     if params[:user][:password].blank?
-      flash.now[:danger] = I18n.t(:blank_password, scope: 'password_resets.update')
+      flash.now[:danger] = t('.blank_password')
       render 'edit'
     elsif @user.update(user_params)
       log_in @user
-      flash[:success] = I18n.t(:password_reset, scope: 'password_resets.update')
+      flash[:success] = t('.password_reset')
       redirect_to @user
     else
       render 'edit'
@@ -53,7 +53,7 @@ class PasswordResetsController < ApplicationController
 
   def check_expiration
     if @user.password_reset_expired?
-      flash[:danger] = I18n.t(:expired_token, scope: 'password_resets')
+      flash[:danger] = t(:expired_token, scope: 'password_resets')
       redirect_to new_password_reset_url
     end
   end

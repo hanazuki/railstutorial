@@ -14,11 +14,11 @@ class SessionsController < ApplicationController
         end
         redirect_back_or @user
       else
-        flash[:warning] = I18n.t(:account_not_activated, scope: 'sessions.create')
+        flash[:warning] = t('.account_not_activated')
         redirect_to root_url
       end
     else
-      flash.now[:danger] = I18n.t(:invalid_login, scope: 'sessions.create')
+      flash.now[:danger] = t('.invalid_login')
       render 'new'
     end
   end
