@@ -1,6 +1,8 @@
 en:
   layouts:
     base_title: Ruby on Rails Tutorial Sample App
+    language:
+      language: Language
     header:
       app_title: Sample App
       home: Home

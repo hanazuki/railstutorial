@@ -1,6 +1,8 @@
 ja:
   layouts:
     base_title: Ruby on Rails Tutorialサンプルアプリケーション
+    language:
+      language: 言語
     header:
       app_title: さんぷる
       home: ホーム
