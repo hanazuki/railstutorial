@@ -14,11 +14,11 @@ class SessionsController < ApplicationController
         end
         redirect_back_or @user
       else
-        flash[:warning] = 'Account not activated. Check your email for the activation link.'
+        flash[:warning] = I18n.t(:account_not_activated, scope: 'sessions.create')
         redirect_to root_url
       end
     else
-      flash.now[:danger] = 'Invalid email or password'
+      flash.now[:danger] = I18n.t(:invalid_login, scope: 'sessions.create')
       render 'new'
     end
   end
