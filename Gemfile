@@ -34,6 +34,8 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'will_paginate', '~> 3.0.7'
 gem 'bootstrap-will_paginate', '~> 0.0.10'
 
+gem 'rails-i18n', '~> 4.0.0'
+
 gem 'faker', '~> 1.4.2'
 
 gem 'carrierwave', '~> 0.10.0'
