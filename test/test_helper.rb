@@ -7,6 +7,9 @@ require 'rails/test_help'
 require 'minitest/reporters'
 Minitest::Reporters.use!
 
+# Raise on missing translations
+I18n.exception_handler = ->(exn, *_) { fail exn.message }
+
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
