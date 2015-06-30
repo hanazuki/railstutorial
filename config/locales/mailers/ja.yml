@@ -1,0 +1,6 @@
+ja:
+  user_mailer:
+    account_activation:
+      subject: アカウント有効化
+    password_reset:
+      subject: パスワード再設定
