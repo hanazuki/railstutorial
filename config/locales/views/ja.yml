@@ -1,0 +1,133 @@
+ja:
+  layouts:
+    base_title: Ruby on Rails Tutorialサンプルアプリケーション
+    header:
+      app_title: さんぷる
+      home: ホーム
+      help: ヘルプ
+      users: ユーザ一覧
+      account: アカウント
+      profile: プロフィール
+      settings: 設定
+      log_out: ログアウト
+      log_in: ログイン
+    footer:
+      about: このサイトについて
+      contact: 連絡先
+      news: ニュース
+      credit_html: >-
+        <a href="http://www.michaelhartl.com/">Michael Hartl</a>による<a href="http://www.railstutorial.org/">Ruby on Rails Tutorial</a>
+  application:
+    login_required: ログインしてください。
+  helpers:
+    label:
+      user: &labels_user
+        name: 名前
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: パスワード（確認）
+      session: *labels_user
+      password_reset: *labels_user
+  shared:
+    user_home:
+      micropost_feed: フィード
+    user_info:
+      view_profile: プロフィールをみる
+      micropost_count: "投稿数: %{count}"
+    stats:
+      following: フォロー
+      followers: フォロワー
+    micropost_form:
+      content_placeholder: いまなにしてる？
+      submit: 投稿
+      too_large_file: アップロードできるファイルのサイズは%{size}MBまでです。もっと小さなファイルを選んでください。
+    error_messages:
+      error_count: フォームに%{count}個のエラーがあります。
+  users:
+    index:
+      title: すべてのユーザ
+    show:
+      microposts: マイクロソフト
+    new:
+      title: ユーザ登録
+      submit: アカウントを作成
+    edit:
+      title: プロフィール更新
+      submit: 変更を保存
+      change_gravatar: 変更
+    update:
+      profile_updated: プロフィールを更新しました。
+    create:
+      check_email: アカウントの有効化のために電子メールを確認して下さい。
+    destroy:
+      user_deleted: ユーザを削除しました。
+    user:
+      delete: 削除
+      delete_confirmation: よろしいですか？
+    follow:
+      follow: フォロー
+    unfollow:
+      unfollow: フォロー解除
+    show_follow:
+      followers: フォロワー一覧
+      following: フォロー一覧
+      view_profile: プロフィールをみる
+      microposts: マイクロポスト
+  microposts:
+    micropost:
+      posted_ago: "%{ago}前に投稿。"
+      delete: 削除
+      delete_confirmation: よろしいですか？
+    create:
+      created: 投稿しました！
+    destroy:
+      deleted: 投稿を削除しました。
+  password_resets:
+    new:
+      title: パスワード再発行
+      submit: 送信
+    edit:
+      title: パスワード再設定
+      submit: パスワードを更新
+    create:
+      email_sent: パスワードの設定方法を電子メールで送信しました。
+      email_not_found: メールアドレスが見つかりません。
+    update:
+      blank_password: パスワードは空欄にできません。
+      password_reset: パスワードを再設定しました。
+    expired_token: パスワード再設定の有効期限が切れています。
+  account_activations:
+    edit:
+      activated: アカウントの有効化が完了しました！
+      invalid: 無効なリンクです。
+  sessions:
+    new:
+      title: ログイン
+      remember_me: このコンピュータでセッションを保存する
+      forget_password: パスワードを忘れた場合
+      new_user: はじめてですか？
+      sign_up: 今すぐユーザ登録！
+      submit: ログイン
+    create:
+      account_not_activated: アカウントが有効化されていません。電子メールを確認して下さい。
+      invalid_login: メールアドレスかパスワードが間違っています。
+  static_pages:
+    landing:
+      welcome: ようこそ
+      sign_up: いますぐユーザ登録
+      rails_logo: Railsロゴ
+      message_html: >-
+        ここは<a href="http://www.railstutorial.org/">Ruby on Rails Tutorial</a>サンプルアプリケーションのトップページです。
+    about:
+      title: このサイトについて
+      message_html: >-
+        <a href="http://www.railstutorial.org/"><em>Ruby on Rails Tutorial</em></a>は<a href="http://rubyonrails.org/">Ruby on Rails</a>を使ってウェブアプリケーションの開発について学ぶための<a href="http://www.railstutorial.org/book">本</a>と<a href="http://screencasts.railstutorial.org/">スクリーンキャストのシリーズ</a>です。これはチュートリアルのサンプルアプリケーションです。
+    contact:
+      title: 連絡先
+      message_html: >-
+        このサンプルアプリケーションに関するお問合せは，Ruby on Rails Tutorialの<a href="http://www.railstutorial.org/#contact">連絡先ページ</a>からご連絡ください。
+    help:
+      title: ヘルプ
+      message_html: >-
+        Ruby on Rails Tutorialについての質問がある場合は<a href="http://www.railstutorial.org/#help">チュートリアルの“Help”の節</a>をご覧ください。
+        このサンプルアプリケーションについては<a href="http://www.railstutorial.org/book"><em>Ruby on Rails Tutorial</em></a>をご覧ください。
