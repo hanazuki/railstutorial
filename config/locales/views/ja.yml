@@ -47,7 +47,7 @@ ja:
     index:
       title: すべてのユーザ
     show:
-      microposts: マイクロソフト
+      microposts: マイクロポスト
     new:
       title: ユーザ登録
       submit: アカウントを作成
