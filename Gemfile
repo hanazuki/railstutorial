@@ -34,6 +34,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'will_paginate', '~> 3.0.7'
 gem 'bootstrap-will_paginate', '~> 0.0.10'
 
+gem 'http_accept_language', '~> 2.0.5'
 gem 'rails-i18n', '~> 4.0.0'
 gem 'will-paginate-i18n', '~> 0.1.15'
 

@@ -7,16 +7,34 @@ class LocaleTest < ActionDispatch::IntegrationTest
   end
 
   test 'locale paramter' do
-    get root_path, locale: 'ja'
-    assert_equal :ja, I18n.locale
+    # Default locale
+    get root_path
+    assert_select 'html[lang=?]', I18n.default_locale.to_s
+    assert_nil session[:locale]
+
+    # Respect browser setting
+    get root_path, nil, {HTTP_ACCEPT_LANGUAGE: 'ja,en;q=0.5'}
     assert_select 'html[lang=ja]'
-    get about_path
-    assert_equal :ja, I18n.locale
+    assert_nil session[:locale]
+
+    # Again respect browser setting
+    get root_path, nil, {HTTP_ACCEPT_LANGUAGE: 'en,ja;q=0.5'}
+    assert_select 'html[lang=en]'
+    assert_nil session[:locale]
+
+    # Respect user preference over browser settings
+    get root_path, {locale: 'ja'}, {HTTP_ACCEPT_LANGUAGE: 'en,ja;q=0.5'}
+    assert_select 'html[lang=ja]'
+    assert_equal 'ja', session[:locale]
+
+    # User preference should be saved across session
+    get about_path, nil, {HTTP_ACCEPT_LANGUAGE: 'en,ja;q=0.5'}
     assert_select 'html[lang=ja]'
 
-    get root_path, locale: 'en'
-    assert_equal :en, I18n.locale
+    # Override preference again
+    get root_path, {locale: 'en'}, {HTTP_ACCEPT_LANGUAGE: 'en,ja;q=0.5'}
     assert_select 'html[lang=en]'
+    assert_equal 'en', session[:locale]
   end
 
   test 'locale chooser' do
