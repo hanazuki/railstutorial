@@ -35,6 +35,7 @@ gem 'will_paginate', '~> 3.0.7'
 gem 'bootstrap-will_paginate', '~> 0.0.10'
 
 gem 'rails-i18n', '~> 4.0.0'
+gem 'will-paginate-i18n', '~> 0.1.15'
 
 gem 'faker', '~> 1.4.2'
 
