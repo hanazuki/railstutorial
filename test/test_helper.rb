@@ -7,6 +7,8 @@ require 'rails/test_help'
 require 'minitest/reporters'
 Minitest::Reporters.use!
 
+require 'forwardable'
+
 # Raise on missing translations
 I18n.exception_handler = ->(exn, *_) { fail exn.message }
 
@@ -39,4 +41,7 @@ class ActiveSupport::TestCase
   def integration_test?
     defined?(post_via_redirect)
   end
+
+  extend Forwardable
+  def_delegators :I18n, :t, :l
 end
