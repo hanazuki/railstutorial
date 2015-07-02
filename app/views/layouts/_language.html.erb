@@ -1,0 +1,15 @@
+<span class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+    <% if I18n.locale == I18n.default_locale %>
+      <%= t('.language') %>
+    <% else %>
+      <%= t('.language') %> (<%= t('.language', locale: I18n.default_locale) %>)
+    <% end %>
+    <b class="caret"></b>
+  </a>
+  <ul id="locale-chooser" class="dropdown-menu">
+    <% I18n.available_locales.each do |locale| %>
+      <li><%= link_to t('native_language_name', locale: locale), url_for(params.merge(locale: locale.to_s)) %></li>
+    <% end %>
+  </ul>
+</span>

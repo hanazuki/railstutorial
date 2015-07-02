@@ -48,7 +48,7 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
     patch password_reset_path(user.reset_token),
           email: user.email,
           user: {password: '', password_confirmation: ''}
-    assert_select '.flash_message', text: /blank/
+    assert_select '.flash_message', text: t('password_resets.update.blank_password')
 
     # Invalid password confirmation
     patch password_reset_path(user.reset_token),
@@ -62,7 +62,7 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
           user: {password: 'foobar', password_confirmation: 'foobar'}
     assert_redirected_to user_url(@user)
     follow_redirect!
-    assert_select '.flash_message', text: /reset/
+    assert_select '.flash_message', text: t('password_resets.update.password_reset')
     assert is_logged_in?, 'User should now be logged in'
     assert @user.reload.authenticate('foobar'), 'User should be able to login with the new password'
   end
@@ -79,6 +79,6 @@ class PasswordResetsTest < ActionDispatch::IntegrationTest
           user: { password: 'foobar', password_confirmation: 'foobar' }
     assert_response :redirect
     follow_redirect!
-    assert_match /expired/i, response.body
+    assert_select '.flash_message', text: t('password_resets.expired_token')
   end
 end

@@ -5,25 +5,38 @@ class UserMailerTest < ActionMailer::TestCase
     user = users(:michael)
     user.activation_token = User.new_token
 
-    mail = UserMailer.account_activation(user)
-    assert_equal "Account activation", mail.subject
-    assert_equal [user.email], mail.to
-    assert_equal ["noreply@example.com"], mail.from
-    assert_match user.name, mail.body.encoded
-    assert_match user.activation_token, mail.body.encoded
-    assert_match CGI::escape(user.email), mail.body.encoded
+    I18n.available_locales.each do |locale|
+      I18n.with_locale(locale) do
+        mail = UserMailer.account_activation(user)
+        assert_equal I18n.t('user_mailer.account_activation.subject', locale: locale), mail.subject
+        assert_equal [user.email], mail.to
+        assert_equal ["noreply@example.com"], mail.from
+        assert_match user.name, mail.text_part.body.to_s
+        assert_match user.activation_token, mail.text_part.body.to_s
+        assert_match CGI::escape(user.email), mail.text_part.body.to_s
+        assert_match user.name, mail.html_part.body.to_s
+        assert_match user.activation_token, mail.html_part.body.to_s
+        assert_match CGI::escape(user.email), mail.html_part.body.to_s
+      end
+    end
   end
 
   test "password_reset" do
     user = users(:michael)
     user.reset_token = User.new_token
 
-    mail = UserMailer.password_reset(user)
-    assert_equal "Password reset", mail.subject
-    assert_equal [user.email], mail.to
-    assert_equal ["noreply@example.com"], mail.from
-    assert_match user.reset_token, mail.body.encoded
-    assert_match CGI::escape(user.email), mail.body.encoded
+    I18n.available_locales.each do |locale|
+      I18n.with_locale(locale) do
+        mail = UserMailer.password_reset(user)
+        assert_equal I18n.t('user_mailer.password_reset.subject', locale: locale), mail.subject
+        assert_equal [user.email], mail.to
+        assert_equal ["noreply@example.com"], mail.from
+        assert_match user.reset_token, mail.text_part.body.to_s
+        assert_match CGI::escape(user.email), mail.text_part.body.to_s
+        assert_match user.reset_token, mail.html_part.body.to_s
+        assert_match CGI::escape(user.email), mail.html_part.body.to_s
+      end
+    end
   end
 
 end

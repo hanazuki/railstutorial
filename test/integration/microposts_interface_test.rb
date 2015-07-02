@@ -30,7 +30,7 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
     assert_match content, response.body
 
     # Delete a post.
-    assert_select 'a', text: 'delete'
+    assert_select 'a', text: t('microposts.micropost.delete')
     first_micropost = @user.microposts.paginate(page: 1).first
     assert_difference 'Micropost.count', -1 do
       delete micropost_path(first_micropost)
@@ -38,12 +38,12 @@ class MicropostsInterfaceTest < ActionDispatch::IntegrationTest
 
     # Visit a different user.
     get user_path(users(:archer))
-    assert_select 'a', text: 'delete', count: 0
+    assert_select 'a', text: t('microposts.micropost.delete'), count: 0
   end
 
   test 'micropost sidebar count' do
     log_in_as(@user)
-    get root_path
+    get root_path, locale: :en
     assert_match "#{@user.microposts.count} microposts", response.body
 
     @user = users(:mallory)  # mallory has no microposts
