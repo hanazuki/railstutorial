@@ -67,7 +67,7 @@ Rails.application.configure do
   config.action_mailer.default_url_options = {host: 'agile-fjord-2695.herokuapp.com'}
   ActionMailer::Base.smtp_settings = {
     address: ENV['SMTP_HOST'],
-    port: ENV['SMTP_PORT'] || 25,
+    port: ENV['SMTP_PORT'] || 587,
     authentication: :plain,
     user_name: ENV['SMTP_USERNAME'],
     password: ENV['SMTP_PASSWORD'],
