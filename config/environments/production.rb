@@ -66,12 +66,12 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = {host: 'agile-fjord-2695.herokuapp.com'}
   ActionMailer::Base.smtp_settings = {
-    address: 'smtp.sendgrid.net',
-    port: 587,
+    address: ENV['SMTP_HOST'],
+    port: ENV['SMTP_PORT'] || 25,
     authentication: :plain,
-    user_name: ENV['SENDGRID_USERNAME'],
-    password: ENV['SENDGRID_PASSWORD'],
-    domain: 'heroku.com',
+    user_name: ENV['SMTP_USERNAME'],
+    password: ENV['SMTP_PASSWORD'],
+    domain: ENV['SMTP_DOMAIN'],
     enable_starttls_auto: true
   }
 
