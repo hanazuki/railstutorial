@@ -7,8 +7,7 @@ class Api::MicropostsController < Api::ApplicationController
     if @micropost.save
       render json: @micropost, status: :created
     else
-      @messages = @micropost.errors.full_messages
-      render "api/shared/error_messages.json", status: :unprocessable_entity
+      render_errors @micropost.errors.full_messages, status: :unprocessable_entity
     end
   end
 

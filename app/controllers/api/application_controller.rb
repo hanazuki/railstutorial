@@ -8,8 +8,11 @@ class Api::ApplicationController < ActionController::Base
   # Confirms a logged-in user
   def logged_in_user
     unless logged_in?
-      @messages = ["Unauthorized"]
-      render "api/shared/error_messages.json", status: :unauthorized
+      render_errors ["Unauthorized"], status: :unauthorized
     end
+  end
+
+  def render_errors(error_messages, options)
+    render options.merge!(json: {"errors" => error_messages})
   end
 end
