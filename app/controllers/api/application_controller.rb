@@ -13,6 +13,6 @@ class Api::ApplicationController < ActionController::Base
   end
 
   def render_errors(error_messages, options)
-    render options.merge!(json: {"errors" => error_messages})
+    render options.merge(json: {"errors" => error_messages})
   end
 end
