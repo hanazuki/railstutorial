@@ -9,7 +9,7 @@ class Api::ApplicationController < ActionController::Base
   def logged_in_user
     unless logged_in?
       @messages = ["Unauthorized"]
-      render "api/shared/error_messages", status: :unauthorized
+      render "api/shared/error_messages.json", status: :unauthorized
     end
   end
 end
