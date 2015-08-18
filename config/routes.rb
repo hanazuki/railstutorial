@@ -23,11 +23,12 @@ Rails.application.routes.draw do
     resources :users do
       member do
         get :following, :followers
+        post   'follow' => 'users#follow'
+        delete 'follow' => 'users#unfollow'
       end
     end
     resources :password_resets, only: [:create, :update]
     resources :microposts, only: [:create, :destroy]
-    resources :relationships, only: [:create, :destroy]
   end
 
   # The priority is based upon order of creation: first created -> highest priority.
