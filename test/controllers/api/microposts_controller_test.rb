@@ -46,4 +46,12 @@ class Api::MicropostsControllerTest < ActionController::TestCase
     assert_equal 401, response.status
     assert json["errors"].member? "Unauthorized"
   end
+
+  test 'should return 403 if current_user is not the owner' do
+    other = users(:archer)
+    log_in_as(other)
+    delete :destroy, id: @micropost
+
+    assert_equal 403, response.status
+  end
 end
