@@ -11,7 +11,7 @@ class Api::MicropostsControllerTest < ActionController::TestCase
     log_in_as(@user)
     post :create, micropost: {content: "Lorem ipsum"}
 
-    p json = JSON.parse(response.body)
+    json = JSON.parse(response.body)
 
     assert_equal 201, response.status
 
