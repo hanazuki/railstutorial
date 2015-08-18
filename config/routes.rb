@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   resources :microposts, only: [:create, :destroy]
   resources :relationships, only: [:create, :destroy]
 
-  namespace :api, {format: 'json'} do
+  namespace :api, defaults: {format: 'json'} do
     post 'login' => 'sessions#create'
     delete 'logout' => 'sessions#destroy'
     resources :users do
