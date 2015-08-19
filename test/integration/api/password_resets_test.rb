@@ -6,7 +6,7 @@ class Api::PasswordResetsTest < ActionDispatch::IntegrationTest
     @user = users(:michael)
   end
 
-  test 'should return 422 when password was invalid' do
+  test 'should return 422 when email was invalid' do
     post api_password_resets_path, password_reset: {email: 'invaid'}
     assert_equal 422, response.status
   end
