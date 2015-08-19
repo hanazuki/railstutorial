@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: {format: 'json'} do
     post 'login' => 'sessions#create'
     delete 'logout' => 'sessions#destroy'
+    get 'feed' => 'feed#index'
     resources :users do
       member do
         get :following, :followers
