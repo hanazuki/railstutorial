@@ -28,6 +28,20 @@ class Api::PasswordResetsTest < ActionDispatch::IntegrationTest
     assert_equal 422, response.status
   end
 
+  test "should return 422 if given password didn't pass the validations" do
+    post api_password_resets_path, password_reset: {email: @user.email}
+    user = assigns(:user)
+
+    patch api_password_reset_path(user.reset_token),
+          email: user.email,
+          user: {password: 'abc', password_confirmation: 'abc'}
+
+    json = JSON.parse(response.body)
+
+    assert_equal 422, response.status
+    assert json["errors"].any? {|msg| msg =~ /too short/i}
+  end
+
   test 'should return 422 if confirmation did not match on reset' do
     post api_password_resets_path, password_reset: {email: @user.email}
     user = assigns(:user)

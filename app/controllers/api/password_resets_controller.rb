@@ -21,7 +21,7 @@ class Api::PasswordResetsController < Api::ApplicationController
       log_in @user
       render json: "", status: :accepted
     else
-      render json: "", status: :unprocessable_entity
+      render_errors @user.errors.full_messages, status: :unprocessable_entity
     end
   end
 
