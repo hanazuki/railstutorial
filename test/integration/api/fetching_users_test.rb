@@ -46,8 +46,9 @@ class Api::FetchingUsersTest < ActionDispatch::IntegrationTest
     assert_equal @user.following.count, json["following_count"]
     assert_equal @user.followers.count, json["followers_count"]
 
+    attributes = ["id", "user_id", "content", "picture_url", "created_at"]
     assert json["microposts"].all? {|micropost|
-      (micropost.keys - ["id", "user_id", "content", "picture", "created_at"]).empty?
+      (attributes - micropost.keys).empty? && (micropost.keys - attributes).empty?
     }
   end
 
@@ -68,5 +69,35 @@ class Api::FetchingUsersTest < ActionDispatch::IntegrationTest
     assert_no_difference 'microposts_in_page_2.count' do
       microposts_in_page_2 = microposts_in_page_2 - microposts_in_page_1
     end
+  end
+
+  test "following should return following users" do
+    log_in_as(@user)
+    get following_api_user_path(@user)
+
+    json = JSON.parse(response.body)
+
+    assert json.is_a?(Array)
+    assert User.where(id: json.map {|u| u["id"] }).all? {|user| @user.following? user }
+
+    attributes = ["id", "name", "email"]
+    assert json.all? {|user|
+      (user.keys - attributes).empty? && (attributes - user.keys).empty?
+    }
+  end
+
+  test "followers should return user's followers" do
+    log_in_as(@user)
+    get followers_api_user_path(@user)
+
+    json = JSON.parse(response.body)
+
+    assert json.is_a?(Array)
+    assert User.where(id: json.map {|u| u["id"] }).all? {|user| @user.followed_by? user }
+
+    attributes = ["id", "name", "email"]
+    assert json.all? {|user|
+      (user.keys - attributes).empty? && (attributes - user.keys).empty?
+    }
   end
 end

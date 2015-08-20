@@ -38,19 +38,17 @@ class Api::UsersController < Api::ApplicationController
   end
 
   def following
-    @title = t('following', scope: 'users.show_follow')
-    @user  = User.find(params[:id])
-    @users = @user.following.paginate(page: params[:page])
+    user  = User.find(params[:id])
+    @users = user.following.paginate(page: params[:page])
 
-    render json: @users
+    render action: :index
   end
 
   def followers
-    @title = t('followers', scope: 'users.show_follow')
-    @user  = User.find(params[:id])
-    @users = @user.followers.paginate(page: params[:page])
+    user  = User.find(params[:id])
+    @users = user.followers.paginate(page: params[:page])
 
-    render json: @users
+    render action: :index
   end
 
   private
