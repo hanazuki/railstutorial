@@ -51,6 +51,20 @@ class Api::UsersController < Api::ApplicationController
     render action: :index
   end
 
+  def follow
+    user = User.find(params[:id])
+    current_user.follow(user) unless current_user.following? user
+
+    render json: "", status: :created
+  end
+
+  def unfollow
+    user = User.find(params[:id])
+    current_user.unfollow(user) if current_user.following? user
+
+    render json: "", status: :accepted
+  end
+
   private
 
   def user_params
