@@ -1,5 +1,6 @@
 class Api::UsersController < Api::ApplicationController
-  before_action :logged_in_user, only: [:index, :update, :destroy, :following, :followers]
+  before_action :logged_in_user,
+    only: [:index, :update, :destroy, :following, :followers, :follow, :unfollow]
   before_action :correct_user, only: [:update]
   before_action :admin_user, only: [:destroy]
 
