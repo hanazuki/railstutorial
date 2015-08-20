@@ -18,7 +18,7 @@ class Api::UsersController < Api::ApplicationController
     @user = User.new(user_params)
     if @user.save
       @user.send_activation_email
-      render json: "", stauts: :created
+      render json: "", status: :created  # まだActivateされてないので空っぽ返す
     else
       render_errors @user.errors.full_messages, status: :unprocessable_entity
     end
@@ -27,7 +27,7 @@ class Api::UsersController < Api::ApplicationController
   def update
     @user = User.find(params[:id])
     if @user && @user.update_attributes(user_params)
-      render json: @user, status: :accepted
+      render action: :show, status: :accepted
     else
       render_errors @user.errors.full_messages, status: :unprocessable_entity
     end

@@ -60,7 +60,7 @@ class Api::UsersControllerTest < ActionController::TestCase
   test 'should not allow the admin attribute to be edited via the web' do
     log_in_as(@other_user)
     assert_not @other_user.admin?
-    patch :update, id: @other_user, user: {name: 'TESTNAME', admin: '1'}
+    patch :update, id: @other_user, user: {name: 'TESTNAME', admin: '1'}, format: 'json'
 
     @other_user.reload
     json = JSON.parse(response.body)
