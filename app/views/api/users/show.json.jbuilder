@@ -1,4 +1,4 @@
-json.extract!(@user, :id, :name, :email)
+json.extract!(@user, :id, :name)
 
 json.followers_count(@user.followers.count)
 json.following_count(@user.following.count)

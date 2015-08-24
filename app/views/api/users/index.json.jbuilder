@@ -1,1 +1,1 @@
-json.array!(@users, :id, :name, :email)
+json.array!(@users, :id, :name)
