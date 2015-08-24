@@ -18,8 +18,7 @@ class Api::PasswordResetsController < Api::ApplicationController
     if params[:user][:password].blank?
       render_errors ["Password can't be blank"], status: :unprocessable_entity
     elsif @user.update(user_params)
-      log_in @user
-      render json: "", status: :accepted
+      render json: {auth_token: token_for(@user)}, status: :accepted
     else
       render_errors @user.errors.full_messages, status: :unprocessable_entity
     end
