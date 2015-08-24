@@ -12,7 +12,7 @@ class Api::FetchingUsersTest < ActionDispatch::IntegrationTest
     json = JSON.parse(response.body)
 
     assert json.is_a?(Array)
-    assert json.all? {|user| (user.keys - %w[id name]).empty? }
+    assert json.all? {|user| (user.keys - %w[id name avatar_url]).empty? }
   end
 
   test "index should be paginated" do
@@ -41,8 +41,9 @@ class Api::FetchingUsersTest < ActionDispatch::IntegrationTest
     json = JSON.parse(response.body)
 
     assert json.is_a?(Hash)
-    assert_empty(json.keys - %w[id name email microposts following_count followers_count])
+    assert_empty(json.keys - %w[id name avatar_url microposts following_count followers_count])
 
+    assert_equal @user.avatar_url,      json["avatar_url"]
     assert_equal @user.following.count, json["following_count"]
     assert_equal @user.followers.count, json["followers_count"]
 
@@ -80,7 +81,7 @@ class Api::FetchingUsersTest < ActionDispatch::IntegrationTest
     assert json.is_a?(Array)
     assert User.where(id: json.map {|u| u["id"] }).all? {|user| @user.following? user }
 
-    attributes = ["id", "name"]
+    attributes = ["id", "name", "avatar_url"]
     assert json.all? {|user|
       (user.keys - attributes).empty? && (attributes - user.keys).empty?
     }
@@ -95,7 +96,7 @@ class Api::FetchingUsersTest < ActionDispatch::IntegrationTest
     assert json.is_a?(Array)
     assert User.where(id: json.map {|u| u["id"] }).all? {|user| @user.followed_by? user }
 
-    attributes = ["id", "name"]
+    attributes = ["id", "name", "avatar_url"]
     assert json.all? {|user|
       (user.keys - attributes).empty? && (attributes - user.keys).empty?
     }
