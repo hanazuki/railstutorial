@@ -12,7 +12,11 @@ class Api::FetchingUsersTest < ActionDispatch::IntegrationTest
     json = JSON.parse(response.body)
 
     assert json.is_a?(Array)
-    assert json.all? {|user| (user.keys - %w[id name avatar_url]).empty? }
+
+    expected_attrs = %w[id name avatar_url].sort
+    json.each do |user|
+      assert_equal expected_attrs, user.keys.sort
+    end
   end
 
   test "index should be paginated" do
@@ -41,16 +45,13 @@ class Api::FetchingUsersTest < ActionDispatch::IntegrationTest
     json = JSON.parse(response.body)
 
     assert json.is_a?(Hash)
-    assert_empty(json.keys - %w[id name avatar_url microposts following_count followers_count])
+
+    expected_attrs = %w[id name avatar_url microposts following_count followers_count].sort
+    assert_equal expected_attrs, json.keys.sort
 
     assert_equal @user.avatar_url,      json["avatar_url"]
     assert_equal @user.following.count, json["following_count"]
     assert_equal @user.followers.count, json["followers_count"]
-
-    attributes = ["id", "user_id", "content", "picture_url", "created_at"]
-    assert json["microposts"].all? {|micropost|
-      (attributes - micropost.keys).empty? && (micropost.keys - attributes).empty?
-    }
   end
 
   test "each user's microposts should be paginated" do
@@ -81,10 +82,10 @@ class Api::FetchingUsersTest < ActionDispatch::IntegrationTest
     assert json.is_a?(Array)
     assert User.where(id: json.map {|u| u["id"] }).all? {|user| @user.following? user }
 
-    attributes = ["id", "name", "avatar_url"]
-    assert json.all? {|user|
-      (user.keys - attributes).empty? && (attributes - user.keys).empty?
-    }
+    expected_attrs = %w[id name avatar_url].sort
+    json.each do |user|
+      assert_equal expected_attrs, user.keys.sort
+    end
   end
 
   test "followers should return user's followers" do
@@ -96,9 +97,9 @@ class Api::FetchingUsersTest < ActionDispatch::IntegrationTest
     assert json.is_a?(Array)
     assert User.where(id: json.map {|u| u["id"] }).all? {|user| @user.followed_by? user }
 
-    attributes = ["id", "name", "avatar_url"]
-    assert json.all? {|user|
-      (user.keys - attributes).empty? && (attributes - user.keys).empty?
-    }
+    expected_attrs = %w[id name avatar_url].sort
+    json.each do |user|
+      assert_equal expected_attrs, user.keys.sort
+    end
   end
 end
