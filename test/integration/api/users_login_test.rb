@@ -12,32 +12,13 @@ class Api::UserLoginTest < ActionDispatch::IntegrationTest
     assert_equal 401, response.status
   end
 
-  test 'login with valid information followed by logout' do
-    delete api_logout_path
+  test 'should return auth_token when givin information is valid' do
     post api_login_path, session: {email: @user.email, password: 'password'}
 
+    json = JSON.parse(response.body)
+
     assert_equal 201, response.status
-    assert_not_empty cookies["user_id"]
-    assert_not_empty cookies["remember_token"]
-
-    delete api_logout_path
-
-    assert_equal 202, response.status
-
-    assert_empty cookies["user_id"]
-    assert_empty cookies["remember_token"]
-  end
-
-  test 'logout twice affects nothing' do
-    delete api_logout_path
-
-    assert_equal 202, response.status
-    assert_not is_logged_in?
-
-    delete api_logout_path
-
-    assert_equal 202, response.status
-    assert_not is_logged_in?
+    assert_not_empty json["auth_token"]
   end
 
   test "token should be remembered regardless of the remember_me parameter" do

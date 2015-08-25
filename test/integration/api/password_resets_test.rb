@@ -59,7 +59,6 @@ class Api::PasswordResetsTest < ActionDispatch::IntegrationTest
     patch api_password_reset_path(user.reset_token),
           email: user.email,
           user: {password: 'foobar', password_confirmation: 'foobar'}
-    assert is_logged_in?, 'User should now be logged in'
     assert @user.reload.authenticate('foobar'), 'User should be able to login with the new password'
   end
 
