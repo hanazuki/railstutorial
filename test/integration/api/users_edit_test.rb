@@ -4,13 +4,19 @@ class Api::UsersEditTest < ActionDispatch::IntegrationTest
 
   def setup
     @user = users(:michael)
+    @headers = {"Authorization" => token_for(@user)}
   end
 
   test 'unsuccessful edit should return 422' do
-    log_in_as(@user)
-    patch api_user_path(@user),
-          user: {name: '', email: 'foo@invalid.',
-                 password: 'foo', password_confirmation: 'bar'}
+    user_params = {
+      user: {
+        name:                  '',
+        email:                 'foo@invalid.',
+        password:              'foo',
+        password_confirmation: 'bar'
+      }
+    }
+    patch api_user_path(@user), user_params, @headers
 
     @user.reload
 
@@ -22,10 +28,15 @@ class Api::UsersEditTest < ActionDispatch::IntegrationTest
     name  = 'Foo Bar'
     email = 'foo@bar.com'
 
-    log_in_as(@user)
-    patch api_user_path(@user),
-          user: {name: name, email: email,
-                 password: '', password_confirmation: ''}
+    user_params = {
+      user: {
+        name:  name,
+        email: email,
+        password: "",
+        password_confirmation: ""
+      }
+    }
+    patch api_user_path(@user), user_params, @headers
 
     assert_equal 202, response.status
 

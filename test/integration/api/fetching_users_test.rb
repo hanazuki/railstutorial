@@ -2,12 +2,12 @@ require 'test_helper'
 
 class Api::FetchingUsersTest < ActionDispatch::IntegrationTest
   def setup
-    @user  = users(:michael)
+    @user = users(:michael)
+    @headers = {"Authorization" => token_for(@user)}
   end
 
   test "index should return paginated all users" do
-    log_in_as(@user)
-    get api_users_path
+    get api_users_path, {}, @headers
 
     json = JSON.parse(response.body)
 
@@ -20,12 +20,10 @@ class Api::FetchingUsersTest < ActionDispatch::IntegrationTest
   end
 
   test "index should be paginated" do
-    log_in_as(@user)
-
-    get api_users_path, page: 1
+    get api_users_path, {page: 1}, @headers
     users_in_page_1 = JSON.parse(response.body)
 
-    get api_users_path, page: 2
+    get api_users_path, {page: 2}, @headers
     users_in_page_2 = JSON.parse(response.body)
 
     assert_not_equal users_in_page_1, users_in_page_2
@@ -39,8 +37,7 @@ class Api::FetchingUsersTest < ActionDispatch::IntegrationTest
   end
 
   test "show should return an user including the microposts" do
-    log_in_as(@user)
-    get api_user_path(id: @user)
+    get api_user_path(id: @user), {}, @headers
 
     json = JSON.parse(response.body)
 
@@ -55,12 +52,10 @@ class Api::FetchingUsersTest < ActionDispatch::IntegrationTest
   end
 
   test "each user's microposts should be paginated" do
-    log_in_as(@user)
-
-    get api_user_path(@user), page: 1
+    get api_user_path(@user), {page: 1}, @headers
     microposts_in_page_1 = JSON.parse(response.body)["microposts"]
 
-    get api_user_path(@user), page: 2
+    get api_user_path(@user), {page: 2}, @headers
     microposts_in_page_2 = JSON.parse(response.body)["microposts"]
 
     assert_not_equal microposts_in_page_1, microposts_in_page_2
@@ -74,8 +69,7 @@ class Api::FetchingUsersTest < ActionDispatch::IntegrationTest
   end
 
   test "following should return following users" do
-    log_in_as(@user)
-    get following_api_user_path(@user)
+    get following_api_user_path(@user), {}, @headers
 
     json = JSON.parse(response.body)
 
@@ -89,8 +83,7 @@ class Api::FetchingUsersTest < ActionDispatch::IntegrationTest
   end
 
   test "followers should return user's followers" do
-    log_in_as(@user)
-    get followers_api_user_path(@user)
+    get followers_api_user_path(@user), {}, @headers
 
     json = JSON.parse(response.body)
 
