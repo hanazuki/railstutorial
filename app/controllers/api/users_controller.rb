@@ -1,6 +1,6 @@
 class Api::UsersController < Api::ApplicationController
-  before_action :set_current_user,
-    only: [:index, :update, :destroy, :following, :followers, :follow, :unfollow]
+  before_action :set_current_user, except: [:create]
+  before_action :set_user, only: [:show, :update, :destroy, :following, :followers]
   before_action :correct_user, only: [:update]
   before_action :admin_user, only: [:destroy]
 
@@ -9,7 +9,6 @@ class Api::UsersController < Api::ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
     @microposts = @user.microposts.paginate(page: params[:page])
     render_errors ["Account not activated"], status: :forbidden unless @user.activated
   end
@@ -25,7 +24,6 @@ class Api::UsersController < Api::ApplicationController
   end
 
   def update
-    @user = User.find(params[:id])
     if @user && @user.update_attributes(user_params)
       render action: :show, status: :accepted
     else
@@ -34,20 +32,18 @@ class Api::UsersController < Api::ApplicationController
   end
 
   def destroy
-    User.find(params[:id]).destroy
+    @user.destroy
     render json: "", stauts: :accepted
   end
 
   def following
-    user  = User.find(params[:id])
-    @users = user.following.paginate(page: params[:page])
+    @users = @user.following.paginate(page: params[:page])
 
     render action: :index
   end
 
   def followers
-    user  = User.find(params[:id])
-    @users = user.followers.paginate(page: params[:page])
+    @users = @user.followers.paginate(page: params[:page])
 
     render action: :index
   end
@@ -74,9 +70,13 @@ class Api::UsersController < Api::ApplicationController
 
   # Before filters
 
+  def set_user
+    id = params[:id]
+    @user = (id == "me") ? @current_user : User.find(id)
+  end
+
   # Confirms the correct user.
   def correct_user
-    @user = User.find(params[:id])
     render_forbidden unless current_user?(@user)
   end
 
