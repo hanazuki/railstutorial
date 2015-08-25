@@ -12,6 +12,10 @@ module Api::SessionsHelper
     @current_user
   end
 
+  def current_user?(user)
+    current_user == user
+  end
+
   def token_for(user)
     "Bearer #{JWT.encode({user_id: user.id}, secret, 'HS256')}"
   end
