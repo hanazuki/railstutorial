@@ -17,6 +17,20 @@ Rails.application.routes.draw do
   resources :microposts, only: [:create, :destroy]
   resources :relationships, only: [:create, :destroy]
 
+  namespace :api, defaults: {format: 'json'} do
+    post 'login' => 'sessions#create'
+    get 'feed' => 'feed#index'
+    resources :users, except: [:new, :edit] do
+      member do
+        get :following, :followers
+        post   'follow' => 'users#follow'
+        delete 'follow' => 'users#unfollow'
+      end
+    end
+    resources :password_resets, only: [:create, :update]
+    resources :microposts, only: [:create, :destroy]
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -18,6 +18,7 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
   include ApplicationHelper
+  include Api::SessionsHelper
 
   # Returns true if a test user is logged in
   def is_logged_in?

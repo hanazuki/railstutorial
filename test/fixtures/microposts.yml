@@ -5,6 +5,8 @@ orange:
 
 tau_manifesto:
   content: "Check out the @tauday site by @mhartl: http://tauday.com"
+  picture:
+    url: "http://hogehgoe.com/awesome_picture.jpg"
   created_at: <%= 3.years.ago %>
   user: michael
 

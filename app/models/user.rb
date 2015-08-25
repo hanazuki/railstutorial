@@ -99,6 +99,11 @@ class User < ActiveRecord::Base
     followers.include?(other_user)
   end
 
+  def avatar_url
+    gravatar_id = Digest::MD5::hexdigest(email.downcase)
+    "https://secure.gravatar.com/avatar/#{gravatar_id}"
+  end
+
   # Returns the hash digest of the given string
   def self.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ?
