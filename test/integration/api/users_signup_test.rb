@@ -24,22 +24,24 @@ class Api::UsersSignupTest < ActionDispatch::IntegrationTest
     user = assigns(:user)
     assert_not user.activated?
 
-    # Try to log in before activation.
-    log_in_as(user)
-    assert_not is_logged_in?
+    # Try to get protected page before activation.
+    get api_feed_path
+    assert_equal 401, response.status
 
     # Try to activate with invalid token
-    get edit_account_activation_path('invalid token')
-    assert_not is_logged_in?
+    get edit_api_account_activation_path('invalid token')
+    assert_equal 404, response.status
 
     # Try to activate with wrong email
-    get edit_account_activation_path(user.activation_token, email: 'wrong')
-    assert_not is_logged_in?
+    get edit_api_account_activation_path(user.activation_token, email: 'wrong')
+    assert_equal 404, response.status
 
     # Activate with valid token and correct email
-    get edit_account_activation_path(user.activation_token, email: user.email)
+    get edit_api_account_activation_path(user.activation_token, email: user.email)
     assert user.reload.activated?
 
-    assert is_logged_in?
+    # ALready activated
+    get edit_api_account_activation_path(user.activation_token, email: user.email)
+    assert 422, response.status
   end
 end
