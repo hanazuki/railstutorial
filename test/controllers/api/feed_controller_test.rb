@@ -8,15 +8,23 @@ class Api::FeedControllerTest < ActionController::TestCase
   end
 
   test 'should return micropost feed as json' do
-    get :index, {}
+    get :index, format: :json
+
+    json = JSON.parse(response.body)
 
     assert_equal 200, response.status
-    assert_equal @user.feed.to_json, response.body
+
+    assert json.is_a?(Array)
+
+    expected_attrs = %w[id user content picture_url created_at].sort
+    json.each do |micropost|
+      assert_equal expected_attrs, micropost.keys.sort
+    end
   end
 
   test 'should return 402 if auth token is missing' do
     @request.headers["Authorization"] = ""
-    get :index
+    get :index, format: :json
 
     assert 402, response.status
   end
