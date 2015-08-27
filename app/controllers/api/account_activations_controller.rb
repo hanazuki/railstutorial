@@ -13,8 +13,6 @@ class Api::AccountActivationsController < Api::ApplicationController
         render_errors ["User has already been activated"], status: :unprocessable_entity
       elsif !authenticated
         render_errors ["Invalid token"], status: :not_found
-      else
-        render_errors ["Unknown error"], status: :internal_server_error
       end
     end
   end
