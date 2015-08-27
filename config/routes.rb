@@ -19,7 +19,8 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: 'json'} do
     post 'login' => 'sessions#create'
-    get 'feed' => 'feed#index'
+    get  'feed'  => 'feed#index'
+
     resources :users, except: [:new, :edit] do
       member do
         get :following, :followers
@@ -27,6 +28,7 @@ Rails.application.routes.draw do
         delete 'follow' => 'users#unfollow'
       end
     end
+
     resources :password_resets, only: [:create, :update]
     resources :microposts, only: [:create, :destroy]
   end
