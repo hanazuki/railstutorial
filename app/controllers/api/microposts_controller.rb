@@ -5,7 +5,7 @@ class Api::MicropostsController < Api::ApplicationController
   def create
     @micropost = current_user.microposts.build(micropost_params)
     if @micropost.save
-      render json: @micropost, status: :created
+      render partial: "micropost", locals: {micropost: @micropost}, status: :created
     else
       render_errors @micropost.errors.full_messages, status: :unprocessable_entity
     end

@@ -13,12 +13,13 @@ class Api::FeedControllerTest < ActionController::TestCase
     json = JSON.parse(response.body)
 
     assert_equal 200, response.status
-
     assert json.is_a?(Array)
 
-    expected_attrs = %w[id user content picture_url created_at].sort
+    expected_micropost_attrs = %w[id user content picture_url created_at].sort
+    expected_user_attrs      = %w[id name avatar_url].sort
     json.each do |micropost|
-      assert_equal expected_attrs, micropost.keys.sort
+      assert_equal expected_micropost_attrs, micropost.keys.sort
+      assert_equal expected_user_attrs,      micropost["user"].keys.sort
     end
   end
 
