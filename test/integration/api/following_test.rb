@@ -39,4 +39,44 @@ class Api::FollowingTest < ActionDispatch::IntegrationTest
 
     assert 401, response.status
   end
+
+  test "following information: michael follows archer" do
+    @user.follow @other
+    @other.unfollow @user
+    get follow_api_user_path(@other), {}, @headers
+
+    json = JSON.parse(response.body)
+
+    assert_equal "true",  json["following"]
+    assert_equal "false", json["followed"]
+  end
+
+  test "following information: archer follows michael" do
+    get follow_api_user_path(@other), {}, @headers
+
+    json = JSON.parse(response.body)
+
+    assert_equal "false", json["following"]
+    assert_equal "true",  json["followed"]
+  end
+
+  test "following information: following each other" do
+    @user.follow @other
+    get follow_api_user_path(@other), {}, @headers
+
+    json = JSON.parse(response.body)
+
+    assert_equal "true", json["following"]
+    assert_equal "true", json["followed"]
+  end
+
+  test "following information: not following each other" do
+    @other.unfollow @user
+    get follow_api_user_path(@other), {}, @headers
+
+    json = JSON.parse(response.body)
+
+    assert_equal "false", json["following"]
+    assert_equal "false", json["followed"]
+  end
 end
