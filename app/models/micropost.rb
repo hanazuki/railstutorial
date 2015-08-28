@@ -6,6 +6,10 @@ class Micropost < ActiveRecord::Base
   validates :content, presence: true, length: { maximum: 140 }
   validate :picture_size
 
+  def full_picture_url(prefix)
+    prefix.concat picture.url if picture.url
+  end
+
   private
 
   def picture_size
