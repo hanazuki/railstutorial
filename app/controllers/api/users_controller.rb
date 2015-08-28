@@ -51,8 +51,8 @@ class Api::UsersController < Api::ApplicationController
   def follow_info
     if user = User.find(params[:id])
       info = {
-        following: @current_user.following?(user).to_s,
-        followed:  user.following?(@current_user).to_s
+        following: @current_user.following?(user),
+        followed:  user.following?(@current_user)
       }
       render json: info, status: :ok
     else

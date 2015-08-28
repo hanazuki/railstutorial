@@ -47,8 +47,8 @@ class Api::FollowingTest < ActionDispatch::IntegrationTest
 
     json = JSON.parse(response.body)
 
-    assert_equal "true",  json["following"]
-    assert_equal "false", json["followed"]
+    assert     json["following"]
+    assert_not json["followed"]
   end
 
   test "following information: archer follows michael" do
@@ -56,8 +56,8 @@ class Api::FollowingTest < ActionDispatch::IntegrationTest
 
     json = JSON.parse(response.body)
 
-    assert_equal "false", json["following"]
-    assert_equal "true",  json["followed"]
+    assert_not json["following"]
+    assert     json["followed"]
   end
 
   test "following information: following each other" do
@@ -66,8 +66,8 @@ class Api::FollowingTest < ActionDispatch::IntegrationTest
 
     json = JSON.parse(response.body)
 
-    assert_equal "true", json["following"]
-    assert_equal "true", json["followed"]
+    assert json["following"]
+    assert json["followed"]
   end
 
   test "following information: not following each other" do
@@ -76,7 +76,7 @@ class Api::FollowingTest < ActionDispatch::IntegrationTest
 
     json = JSON.parse(response.body)
 
-    assert_equal "false", json["following"]
-    assert_equal "false", json["followed"]
+    assert_not json["following"]
+    assert_not json["followed"]
   end
 end
