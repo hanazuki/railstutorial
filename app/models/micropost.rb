@@ -1,3 +1,5 @@
+require 'uri'
+
 class Micropost < ActiveRecord::Base
   belongs_to :user
   default_scope -> { order(created_at: :desc) }
@@ -7,7 +9,7 @@ class Micropost < ActiveRecord::Base
   validate :picture_size
 
   def full_picture_url(prefix)
-    prefix.concat picture.url if picture.url
+    URI.join(prefix, picture.url).to_s if picture.url
   end
 
   private
