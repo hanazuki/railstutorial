@@ -123,4 +123,11 @@ class UserTest < ActiveSupport::TestCase
       assert_not michael.feed.include?(post_unfollowed), 'feed for michael should not include archer\'s micropost'
     end
   end
+
+  test "picture_url" do
+    micropost = microposts(:ants)
+    full_url = micropost.full_picture_url("https://localhost")
+
+    assert_equal "https://localhost"+micropost.picture.url, full_url
+  end
 end

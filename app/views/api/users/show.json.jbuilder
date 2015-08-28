@@ -6,6 +6,6 @@ json.micropost_count(@user.microposts.count)
 
 json.microposts do
   json.array!(@microposts) do |micropost|
-    json.partial! micropost
+    json.partial! micropost, locals: {request: request}
   end
 end

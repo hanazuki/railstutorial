@@ -5,8 +5,7 @@ orange:
 
 tau_manifesto:
   content: "Check out the @tauday site by @mhartl: http://tauday.com"
-  picture:
-    url: "http://hogehgoe.com/awesome_picture.jpg"
+  picture: "http://hogehgoe.com/awesome_picture.jpg"
   created_at: <%= 3.years.ago %>
   user: michael
 
@@ -20,17 +19,18 @@ most_recent:
   created_at: <%= Time.zone.now %>
   user: michael
 
+ants:
+  content: "Oh, is that what you want? Because that's how you get ants!"
+  created_at: <%= 2.years.ago %>
+  user: archer
+  picture: "ant.png"
+
 <% 30.times do |n| %>
 micropost_<%= n %>:
   content: <%= Faker::Lorem.sentence(5) %>
   created_at: <%= 42.days.ago %>
   user: michael
 <% end %>
-
-ants:
-  content: "Oh, is that what you want? Because that's how you get ants!"
-  created_at: <%= 2.years.ago %>
-  user: archer
 
 zone:
   content: "Danger zone!"
