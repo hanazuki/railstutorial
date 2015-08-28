@@ -48,6 +48,18 @@ class Api::UsersController < Api::ApplicationController
     render action: :index
   end
 
+  def follow_info
+    if user = User.find(params[:id])
+      info = {
+        following: @current_user.following?(user),
+        followed:  user.following?(@current_user)
+      }
+      render json: info, status: :ok
+    else
+      render_errors ["Not found"], status: not_found
+    end
+  end
+
   def follow
     user = User.find(params[:id])
     current_user.follow(user) unless current_user.following? user

@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     resources :users, except: [:new, :edit] do
       member do
         get :following, :followers
+        get    'follow' => 'users#follow_info'
         post   'follow' => 'users#follow'
         delete 'follow' => 'users#unfollow'
       end
