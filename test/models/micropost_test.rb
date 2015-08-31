@@ -29,4 +29,11 @@ class MicropostTest < ActiveSupport::TestCase
   test 'order should be most recent first' do
     assert_equal microposts(:most_recent), Micropost.first
   end
+
+  test "picture_url" do
+    micropost = microposts(:orange)
+    full_url = micropost.full_picture_url("localhost")
+
+    assert_equal "https://localhost"+micropost.picture.url, full_url
+  end
 end
