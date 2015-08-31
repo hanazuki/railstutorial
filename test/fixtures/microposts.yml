@@ -1,6 +1,7 @@
 orange:
   content: "I just ate an orange!"
   created_at: <%= 10.minutes.ago %>
+  picture: "orange.jpg"
   user: michael
 
 tau_manifesto:
